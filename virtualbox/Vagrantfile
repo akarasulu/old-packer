@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+#
+
+btrfs_disk = './tmp/btrfs_disk.vdi'
+
+Vagrant.configure("2") do |config|
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://vagrantcloud.com/search.
+  config.vm.box = "ubuntu/xenial64"
+
+  # Opening ports expected by Tray on launcher installation
+  config.vm.network "forwarded_port", guest: 8443, host: 9999, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 22, host: 4567, host_ip: "127.0.0.1"
+
+  config.vm.network "public_network"
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.memory = "4096"
+    vb.cpus = 2
+    unless File.exist?(btrfs_disk)
+      vb.customize ['createhd', '--filename', btrfs_disk, '--size', 100 * 1024]
+    end
+    vb.customize ['storageattach', :id, '--storagectl', 'SCSI', '--port', 4, '--device', 0, '--type', 'hdd', '--medium', btrfs_disk]
+    vb.name = "xenial64-subutai-peer"
+    vb.linked_clone = true
+  end
+ 
+  config.vm.provision "shell", inline: <<-SHELL
+#    snap install subutai-master --devmode --beta
+#    /snap/subutai-master/current/bin/btrfsinit /dev/sdc
+#    subutai-master import management
+  SHELL
+end
