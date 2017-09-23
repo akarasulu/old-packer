@@ -1,0 +1,7 @@
+output-*
+packer-*
+tmp
+*.box
+template.json
+variables.json
+VMwareTools-*.tar.gz
