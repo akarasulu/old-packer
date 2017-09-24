@@ -1,7 +1,6 @@
 {
   "type": "vagrant",
-  "only": ["vmware-iso"],
-  /*"only": ["virtualbox-iso", "vmware-iso", "parallels-iso"],*/
+  "only": ["virtualbox-iso", "vmware-iso", "parallels-iso"],
   "compression_level": 9,
 
   // leave these without the -iso otherwise they will not take
