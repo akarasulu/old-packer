@@ -20,13 +20,13 @@
     // Parallels Specific
     // ------------------
 
-    "guest_os_type": "ubuntu",
+    "guest_os_type": "debian",
     "parallels_tools_flavor": "lin",
     "hard_drive_interface": "ide",
     "prlctl":
       [
-        [ "set", "{{.Name}}", "--memsize", "8192" ],
-        [ "set", "{{.Name}}", "--cpus", "4" ],
-        [ "set", "{{.Name}}", "--device-set", "hdd0", "--type", "expand", "--size", "65536" ],
+        [ "set", "{{.Name}}", "--memsize", "{{user `memory`}}" ],
+        [ "set", "{{.Name}}", "--cpus", "{{user `cpus`}}" ],
+        [ "set", "{{.Name}}", "--device-set", "hdd0", "--type", "expand", "--size", "{{user `disk_size`}}" ],
       ]
   }

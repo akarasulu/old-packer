@@ -17,7 +17,7 @@
       },
     },
   ],
-  /*"post-processors": [ [
+  "post-processors": [ [
     import "post-processors/vagrant.jsonnet",
-  ] ]*/
+  ] ]
 }

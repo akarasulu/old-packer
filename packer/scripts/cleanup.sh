@@ -5,17 +5,6 @@ if [ -z "$BRANCHTAG" ]; then
   exit -1
 fi
 
-# last LVM volume defined 'hack' gets all space we need to delete
-sudo df -h
-sudo umount /tmp/hack
-sudo lvremove -f main/hack
-cat /etc/fstab | grep -v main-hack > /tmp/fstab
-sudo rm /etc/fstab
-sudo cp /tmp/fstab /etc/fstab
-
-# does not work and not needed
-# sudo grub-installer grub-installer/bootdev string /dev/vda
-
 sudo apt-get -y autoremove
 
 # seems this is removing everything we install

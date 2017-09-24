@@ -31,5 +31,6 @@ fi
 
 echo "==> Running packer build on template.json ..."
 # time packer build -except=null -on-error=ask template.json
+date
 time packer build -on-error=ask -except=null -var-file variables.json template.json
 date

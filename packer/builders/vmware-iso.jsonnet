@@ -23,10 +23,10 @@
     // VMWare Specific
     // ---------------
 
-    "guest_os_type": "linux",
+    "tools_upload_flavor": "linux",
+    "guest_os_type": "debian8-64",
     "vmx_data": {
-      "memsize": "8192",
-      "numvcpus": "4",
-      "cpuid.coresPerSocket": "1"
+      "memsize": "{{user `memory`}}",
+      "numvcpus": "{{user `cpus`}}",
     }
   }
