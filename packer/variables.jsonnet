@@ -20,11 +20,11 @@
     "virtualbox_guest_os_type": "Debian_64",
 
     // Null Host Specific Settings
-    "null_host": "172.16.10.220",
+    "null_host": "192.168.81.129",
 
     // Proxy Settings
-    "apt_proxy_url": "http://192.168.88.79:3142/",
-    "apt_proxy_host": "192.168.88.79",
+    "apt_proxy_url": "{{env `APT_PROXY_URL`}}",
+    "apt_proxy_host": "{{env `APT_PROXY_HOST`}}",
 
     // Desktop and Distribution Settings
     "desktop": "false",

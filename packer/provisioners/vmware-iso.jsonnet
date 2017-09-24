@@ -11,6 +11,8 @@
     "scripts/restart.sh",
     ],
   "execute_command":
+    "export APT_PROXY_HOST='{{user `apt_proxy_host`}}';" +
+    "export APT_PROXY_URL='{{user `apt_proxy_url`}}';" +
     "export BRANCHTAG='{{user `branch_or_tag`}}';" +
     "export DISTRIBUTION='{{user `distribution`}}';" +
     "export DESKTOP='{{user `desktop`}}';" +

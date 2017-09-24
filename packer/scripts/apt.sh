@@ -6,9 +6,11 @@ sudo apt-get -y update
 echo Upgrading distribution ...
 sudo apt-get -y dist-upgrade
 
+set -e
+
 echo Adding needed packages ...
-if [ "$DISTRIBUTION" == "debian" ]; then
-  sudo apt-get install net-tools snapd
-elif [ "$DISTRIBUTION" == "ubuntu" ]; then
-  sudo apt-get install net-tools
+if [ "debian" = "$DISTRIBUTION" ]; then
+  sudo apt-get -y install net-tools snapd
+elif [ "ubuntu" = "$DISTRIBUTION" ]; then
+  sudo apt-get -y install net-tools
 fi

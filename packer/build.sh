@@ -18,6 +18,19 @@ for bt in virtualbox-iso parallels-iso vmware-iso; do
   fi
 done
 
+# Check to see if we have a proxy running
+if [ -n "$APT_PROXY_URL" ]; then
+  echo Checking defined proxy URL = $APT_PROXY_URL
+  PROXY_ON=$(wget -qO- $APT_PROXY_URL/acng-report.html | grep "Transfer statistics");
+  if [ -n "$PROXY_ON" ]; then
+    echo Proxy is on
+    PROXY_ON=true ./preseeds/stretch-template.cfg
+  else
+    echo WARNING: Proxy is off
+    ./preseeds/stretch-template.cfg
+  fi
+fi
+
 echo "==> Generating template.json ..."
 jsonnet template.jsonnet > template.json
 jsonnet variables.jsonnet > variables.json
@@ -32,5 +45,5 @@ fi
 echo "==> Running packer build on template.json ..."
 # time packer build -except=null -on-error=ask template.json
 date
-time packer build -on-error=ask -except=null -var-file variables.json template.json
+time packer build -on-error=ask -except=null template.json
 date
