@@ -10,7 +10,7 @@ set -e
 
 echo Adding needed packages ...
 if [ "debian" = "$DISTRIBUTION" ]; then
-  sudo apt-get -y install net-tools snapd
+  sudo apt-get -y install net-tools snapd inotify-tools
 elif [ "ubuntu" = "$DISTRIBUTION" ]; then
-  sudo apt-get -y install net-tools
+  sudo apt-get -y install net-tools inotify-tools
 fi

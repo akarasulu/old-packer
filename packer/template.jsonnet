@@ -18,6 +18,11 @@
       "destination": "/tmp/fix-vagrant.service"
     },
     {
+      "type": "file",
+      "source": "preseeds/fix-vagrant",
+      "destination": "/tmp/fix-vagrant"
+    },
+    {
       "type": "shell",
       "override": {
         "null": import "provisioners/null.jsonnet",
