@@ -1,4 +1,6 @@
 output-*
+*.log
+.vagrant
 packer-*
 tmp
 *.box

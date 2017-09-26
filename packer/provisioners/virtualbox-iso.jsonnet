@@ -7,8 +7,8 @@
     "scripts/apt.sh",
     "scripts/vbox.sh",
     "scripts/rc_local.sh",
+    "scripts/grub.sh",
     "scripts/cleanup.sh",
-    "scripts/restart.sh",
     ],
   "execute_command":
     "export APT_PROXY_HOST='{{user `apt_proxy_host`}}';" +
@@ -18,5 +18,5 @@
     "export DESKTOP='{{user `desktop`}}';" +
     "export SSH_USERNAME='{{user `ssh_name`}}';" +
     "export SSH_PASSWORD='{{user `ssh_pass`}}';" +
-    " echo 'subutai' | sudo -E -S sh '{{ .Path }}'"
+    "echo {{user `ssh_pass`}} | sudo -E -S sh '{{ .Path }}'"
 }

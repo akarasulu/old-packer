@@ -20,5 +20,11 @@ sudo umount /mnt
 # issue #12879, see https://www.virtualbox.org/ticket/12879
 [ -e /usr/lib/VBoxGuestAdditions ] || sudo ln -s /opt/VBoxGuestAdditions-$VBOX_VERSION/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions
 
+# Special interfaces for VBox
+sudo cp /tmp/virtualbox-interfaces /etc/network/virtualbox-interfaces
+sudo cp /tmp/virtualbox-interfaces /etc/network/interfaces
+sudo cp /tmp/fix-vagrant.service /etc/systemd/system/fix-vagrant.service
+sudo systemctl enable fix-vagrant.service
+
 # Cleanup
 sudo rm $VBOX_ISO

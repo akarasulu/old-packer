@@ -4,7 +4,7 @@
       "vm_name": "{{ user `vm_name` }}",
       "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo {{user `ssh_pass`}} |sudo -S sh 'shutdown.sh'",
       "boot_command": import "common/bootcommand.jsonnet",
-      "boot_wait": "10s",
+      "boot_wait": "3s",
       "http_directory": "preseeds",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
@@ -34,6 +34,31 @@
         ],
         [
           "modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}"
-        ]
+        ],
+        /*[
+          "modifyvm", "{{.Name}}",
+          "--nic1", "bridged",
+          "--bridgeadapter1", "en0"
+        ],*/
+        /*[
+          "modifyvm", "{{.Name}}",
+          "--nic2", "nat",
+          "--nat-network2", "NatNetwork",
+          "--natpf2", "ssh,tcp,127.0.0.1,4567,,22"
+        ],*/
+        /*[
+          "modifyvm", "{{.Name}}",
+          "--nic3", "hostonly",
+          "--hostonlyadapter3", "vboxnet0",
+          "--intnet3", "vboxnet0"
+        ],*/
+        [
+          "modifyvm", "{{.Name}}",
+          "--uart1", "0x3F8", "4"
+        ],
+        [
+          "modifyvm", "{{.Name}}",
+          "--uartmode1", "file", "{{template_dir}}/{{user `vm_name`}}-console.log"
+        ],
       ],
     }

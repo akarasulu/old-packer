@@ -32,7 +32,8 @@
 
     // Debugging
     "headless": "false",
-    "keep_registered": "false",
+    /*"keep_registered": "false",*/
+    "keep_registered": "true",
     "skip_export": "false",
 
     // automate this

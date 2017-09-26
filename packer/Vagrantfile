@@ -1,0 +1,58 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "subutai/subutai-stretch"
+  config.ssh.username = "subutai"
+  config.ssh.password = "subutai"
+  config.ssh.port = "4567"
+  # config.ssh.host =
+
+  config.vm.network "public_network", :type => 'dhcp', :adapter => 1
+  # config.vm.network "private_network", :type => 'dhcp', virtualbox__nat: true, :adapter => 2
+  config.vm.network "private_network", :type => 'dhcp', :name => 'vboxnet0', :adapter => 3
+
+  # config.vm.network :forwarded_port, guest: 22, host: 2222, disabled: true, id: "ssh"
+
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+  # config.vm.network "private_network", ip: "192.168.33.10"
+  # config.vm.network "public_network", type: "dhcp", bridge: "en0"
+  # config.vm.network "private_network", type: "dhcp"
+
+  # config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = true
+    vb.memory = "4096"
+    vb.cpus = 2
+    vb.name = "subutai-stretch-vbox-peer"
+
+    # # eth0 bridged interface configuration
+    # vb.customize ["modifyvm", :id, "--nic1", "bridged"]
+    # vb.customize ["modifyvm", :id, "--bridgeadapter1", "en0"]
+    #
+    # # eth1 nat interface configuration
+    vb.customize ["modifyvm", :id, "--nic2", "nat"]
+    vb.customize ["modifyvm", :id, "--natpf2", "ssh,tcp,127.0.0.1,4567,,22"]
+    #
+    # # eth2 hostonly interface configuration
+    # vb.customize ["modifyvm", :id, "--nic3", "hostonly"]
+    # vb.customize ["modifyvm", :id, "--hostonlyadapter3", "vboxnet0"]
+    # vb.customize ["modifyvm", :id, "--intnet3", "vboxnet0"]
+
+    # console output
+    vb.customize [ "modifyvm", :id, "--uart1", "0x3F8", "4" ]
+    vb.customize [ "modifyvm", :id, "--uartmode1", "file", File.join(Dir.pwd, "subutai-peer-console.log") ]
+
+    # only for dev and master
+    vb.linked_clone = true
+  end
+
+
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo snap install subutai --devmode --beta
+    sudo /snap/subutai/current/bin/btrfsinit /dev/mapper/main-btrfs
+    sudo sleep 3
+    sudo /snap/bin/subutai import management
+  SHELL
+end
