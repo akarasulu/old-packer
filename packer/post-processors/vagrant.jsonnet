@@ -7,6 +7,7 @@
   "override": {
     "virtualbox": {
       "output": "{{user `vm_name`}}-{{user `version`}}-virtualbox.box",
+      "vagrantfile_template": "Vagrantfile-virtualbox"
     },
     "vmware": {
       "output": "{{user `vm_name`}}-{{user `version`}}-vmware.box",
