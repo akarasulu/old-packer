@@ -1,16 +1,16 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.require_version ">= 1.9.7"
+Vagrant.require_version ">= 2.0.0"
 
 Vagrant.configure("2") do |config|
   config.vm.box = "subutai/stretch"
   config.ssh.username = "subutai"
-  config.ssh.password = "subutai"
+  config.ssh.password = "ubuntai"
   config.ssh.port = "4567"
 
   config.vm.network "public_network", :type => 'dhcp', :adapter => 1
-  config.vm.network "private_network", :type => 'dhcp', :name => 'vboxnet0', :adapter => 3
+  config.vm.network "private_network", :type => 'dhcp', :adapter => 3
 
   # config.vm.synced_folder "../data", "/vagrant_data"
 
@@ -25,21 +25,54 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--natpf2", "ssh,tcp,127.0.0.1,4567,,22"]
     vb.customize ["modifyvm", :id, "--natpf2", "https,tcp,127.0.0.1,9999,,8443"]
 
-    # console output
-    vb.customize [ "modifyvm", :id, "--uart1", "0x3F8", "4" ]
-    vb.customize [ "modifyvm", :id, "--uartmode1", "file", File.join(Dir.pwd, vb.name + "-console.log") ]
+    # console output for debugging
+    # vb.customize [ "modifyvm", :id, "--uart1", "0x3F8", "4" ]
+    # vb.customize [ "modifyvm", :id, "--uartmode1", "file", File.join(Dir.pwd, vb.name + "-console.log") ]
 
     # only for dev and master
     vb.linked_clone = true
   end
 
-
   config.vm.provision "shell", inline: <<-SHELL
     # Neet to wait for network: reset on Vagrant up changes
-    while true; do ping -c 1 mit.edu; if [ ! "$?" = "0" ]; then sleep 5; else break; fi; done
-    sudo snap install subutai --devmode --beta
-    sudo /snap/subutai/current/bin/btrfsinit /dev/mapper/main-btrfs
-    sudo sleep 3
-    sudo /snap/bin/subutai import management
+    while true; do
+      ping -c 1 mit.edu &> /dev/null;
+      if [ ! "$?" = "0" ]; then
+        echo "Configuring interfaces ..."
+        sleep 5;
+      else
+        break;
+      fi;
+    done
+
+    echo "Finding nearest apt mirror"
+    country=`curl -s ipinfo.io | grep country | awk -F ':' '{print $2}' | sed -e 's/[", ]//g'`
+
+    if [ "KG" = "$country" ]; then
+      country=KZ
+    fi
+
+    netselect-apt -c $country &> /dev/null
+    if [ ! "$?" = "0" ]; then
+      netselect-apt -c US &> /dev/null
+    fi
+
+    if [ -f "sources.list" ]; then
+      mv sources.list /etc/apt/sources.list
+    fi
+
+    echo "Installing Subutai Snap ..."
+    snap install subutai --devmode --beta
+
+    echo "Mounting container storage ..."
+    /snap/subutai/current/bin/btrfsinit /dev/mapper/main-btrfs &> /dev/null
+
+    echo "SUCCESS: Debian Stretch resource host (RH) ready!"
+    echo 'Want to convert this RH into a peer?'
+    echo "Step 1: Use 'vagrant ssh' to get into the RH"
+    echo "Step 2: Use 'sudo /snap/bin/subutai import management' to install the peer"
+    echo "Step 3: Hit https://localhost:9999 on Chrome with Subutai extension"
+    echo "Default user credentials: 'admin' / 'secret'"
+    echo "Welcome to the horde!"
   SHELL
 end

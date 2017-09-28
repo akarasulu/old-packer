@@ -11,10 +11,11 @@
     "scripts/restart.sh",
     ],
   "execute_command":
+    "export PROXY_ON='{{user `proxy_on`}}';" +
     "export BRANCHTAG='{{user `branch_or_tag`}}';" +
     "export DISTRIBUTION='{{user `distribution`}}';" +
     "export DESKTOP='{{user `desktop`}}';" +
     "export SSH_USERNAME='{{user `ssh_name`}}';" +
     "export SSH_PASSWORD='{{user `ssh_pass`}}';" +
-    " echo 'subutai' | sudo -E -S sh '{{ .Path }}'"
+    "echo {{user `ssh_pass`}} | sudo -E -S sh '{{ .Path }}'"
 }

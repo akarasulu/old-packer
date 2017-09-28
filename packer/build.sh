@@ -11,6 +11,7 @@ BOXNAME="$(cat variables.jsonnet | grep vm_name | awk -F ':' '{print $2}' | sed 
 
 # clean up output directories and boxes
 rm -rf *.box;
+rm -rf *.log;
 for bt in virtualbox-iso parallels-iso vmware-iso; do
   echo box output directory = "output-$BOXNAME-$bt";
   if [ -d "output-$BOXNAME-$bt" ]; then
@@ -21,13 +22,15 @@ done
 # Check to see if we have a proxy running
 if [ -n "$APT_PROXY_URL" ]; then
   echo Checking defined proxy URL = $APT_PROXY_URL
-  PROXY_ON=$(wget -qO- $APT_PROXY_URL/acng-report.html | grep "Transfer statistics");
+  PROXY_ON=$(wget -t 1 --timeout=2 -qO- $APT_PROXY_URL/acng-report.html | grep "Transfer statistics");
   if [ -n "$PROXY_ON" ]; then
     echo Proxy is on
-    PROXY_ON=true ./preseeds/stretch-template.cfg
+    export PROXY_ON="true"
+    ## TODO: Extract password from the variables.jsonnet
+    PROXY_ON="true" PASSWORD="ubuntai" ./preseeds/stretch-template.cfg
   else
     echo WARNING: Proxy is off
-    ./preseeds/stretch-template.cfg
+    PASSWORD="ubuntai" ./preseeds/stretch-template.cfg
   fi
 fi
 
