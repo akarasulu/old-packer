@@ -69,8 +69,8 @@ might want to use the except flag for parallels-iso and null builders.
 Using Debian File Caching
 -------------------------
 
-There's a Dockerfile in to launch a docker container running the APT caching
-daemon. If you're going to be building over and over again especially to make
+There's a Dockerfile in the root folder to launch a docker container that runs the 
+APT caching daemon. If you're going to be building over and over again especially to make
 changes you'll want to run this container to cache the downloaded files. Here's
 how to use it:
 
@@ -90,6 +90,9 @@ to it:
 "apt_proxy_url": "http://192.168.88.130:3142/",
 "apt_proxy_host": "192.168.88.130",
 ```
+
+You can also set the APT_PROXY_URL and APT_PROXY_HOST environment variables and
+they'll get picked up to populate these variables.
 
 > See here for the original source of information about the docker container
 > and instructions on usage. [https://docs.docker.com/engine/examples/apt-cacher-ng/](https://docs.docker.com/engine/examples/apt-cacher-ng/)
