@@ -38,8 +38,8 @@
 
     // automate this
     // can be dev, master, branch names or a git release tag for production
-    "branch_or_tag": "1.0.3",
+    "branch_or_tag": "1.0.4",
 
     // automate this
-    "version": "1.0.3",
+    "version": "1.0.4",
 }
