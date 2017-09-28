@@ -9,7 +9,7 @@
     "preseed" : "stretch.cfg",
 
     "ssh_name": "subutai",
-    "ssh_pass": "subutai",
+    "ssh_pass": "ubuntai",
     "hostname": "subutai",
 
     "cpus": "2",
@@ -25,6 +25,7 @@
     // Proxy Settings
     "apt_proxy_url": "{{env `APT_PROXY_URL`}}",
     "apt_proxy_host": "{{env `APT_PROXY_HOST`}}",
+    "proxy_on": "{{env `PROXY_ON`}}",
 
     // Desktop and Distribution Settings
     "desktop": "false",
@@ -37,8 +38,8 @@
 
     // automate this
     // can be dev, master, branch names or a git release tag for production
-    "branch_or_tag": "6.0.1",
+    "branch_or_tag": "1.0.4",
 
     // automate this
-    "version": "6.0.1",
+    "version": "1.0.4",
 }

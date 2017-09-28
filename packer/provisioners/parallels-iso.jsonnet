@@ -11,6 +11,7 @@
       "scripts/restart.sh",
       ],
     "execute_command":
+      "export PROXY_ON='{{user `proxy_on`}}';" +
       "export APT_PROXY_HOST='{{user `apt_proxy_host`}}';" +
       "export APT_PROXY_URL='{{user `apt_proxy_url`}}';" +
       "export BRANCHTAG='{{user `branch_or_tag`}}';" +
@@ -18,5 +19,5 @@
       "export DESKTOP='{{user `desktop`}}';" +
       "export SSH_USERNAME='{{user `ssh_name`}}';" +
       "export SSH_PASSWORD='{{user `ssh_pass`}}';" +
-      " echo 'subutai' | sudo -E -S sh '{{ .Path }}'"
+      "echo {{user `ssh_pass`}} | sudo -E -S sh '{{ .Path }}'"
 }
