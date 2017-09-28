@@ -9,23 +9,32 @@ Vagrant.configure("2") do |config|
   config.ssh.password = "ubuntai"
   config.ssh.port = "4567"
 
-  config.vm.network "public_network", :type => 'dhcp', :adapter => 1
-  config.vm.network "private_network", :type => 'dhcp', :adapter => 3
+  config.vm.network "public_network", :type => 'dhcp', :adapter => 1, nic_type: "virtio"
+  config.vm.network "private_network", :type => 'dhcp', :adapter => 3, nic_type: "virtio"
 
   # config.vm.synced_folder "../data", "/vagrant_data"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.gui = true
     vb.memory = "4096"
     vb.cpus = 2
-    vb.name = "subutai-stretch-vbox-peer"
+    vb.name = "subutai-stretch"
 
     # eth1 nat interface configuration
     vb.customize ["modifyvm", :id, "--nic2", "nat"]
+    vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
     vb.customize ["modifyvm", :id, "--natpf2", "ssh,tcp,127.0.0.1,4567,,22"]
     vb.customize ["modifyvm", :id, "--natpf2", "https,tcp,127.0.0.1,9999,,8443"]
 
-    # console output for debugging
+    # To avoid the Sierra bug let's turn off things we do not need
+    # See here: https://github.com/monetate/ectou-export/issues/5
+    vb.customize ["modifyvm", :id, "--audio", "none"]
+
+    vb.customize ["modifyvm", :id, "--uart1", "off"]
+    vb.customize ["modifyvm", :id, "--uart2", "off"]
+    vb.customize ["modifyvm", :id, "--uart3", "off"]
+    vb.customize ["modifyvm", :id, "--uart4", "off"]
+
+    # console output for debugging: remove first uart1 disabling line above
     # vb.customize [ "modifyvm", :id, "--uart1", "0x3F8", "4" ]
     # vb.customize [ "modifyvm", :id, "--uartmode1", "file", File.join(Dir.pwd, vb.name + "-console.log") ]
 
