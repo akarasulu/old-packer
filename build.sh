@@ -27,10 +27,13 @@ if [ -n "$APT_PROXY_URL" ]; then
     echo Proxy is on
     export PROXY_ON="true"
     ## TODO: Extract password from the variables.jsonnet
-    PROXY_ON="true" PASSWORD="ubuntai" ./preseeds/stretch-template.cfg
+    PROXY_ON="true"
+    PASSWORD="ubuntai"
+    source ./preseeds/stretch-template.cfg
   else
     echo WARNING: Proxy is off
-    PASSWORD="ubuntai" ./preseeds/stretch-template.cfg
+    PASSWORD="ubuntai"
+    source ./preseeds/stretch-template.cfg
   fi
 fi
 
@@ -49,5 +52,5 @@ echo "==> Running packer build on template.json ..."
 # time packer build -except=null -on-error=ask template.json
 date
 # time packer build -on-error=ask -except=null template.json
-time packer build -on-error=ask -only=virtualbox-iso -except=null template.json
+time packer build -on-error=ask -only=qemu -except=null template.json
 date

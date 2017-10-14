@@ -1,10 +1,10 @@
 {
     "vm_name": "subutai-stretch",
 
-    "iso_checksum": "ddd8f6542dae8baf410e90b9ae0fe986",
+    "iso_checksum": "5c583fd40360fd039b3ac98387b77dbb",
     "iso_checksum_type": "md5",
-    "iso_name": "debian-9.1.0-amd64-netinst.iso",
-    "iso_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.1.0-amd64-netinst.iso",
+    "iso_name": "debian-9.2.1-amd64-netinst.iso",
+    "iso_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.2.1-amd64-netinst.iso",
 
     "preseed" : "stretch.cfg",
 
