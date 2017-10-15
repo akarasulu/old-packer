@@ -1,4 +1,5 @@
 output-*
+packer_cache
 *.log
 .vagrant
 packer-*
