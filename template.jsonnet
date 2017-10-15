@@ -1,6 +1,6 @@
 {
   builders: [
-    import "builders/qemu.jsonnet",
+    import "builders/libvirt.jsonnet",
     /*
     import "builders/null.jsonnet",
     import "builders/virtualbox-iso.jsonnet",
@@ -10,7 +10,7 @@
   ],
   "variables": import "variables.jsonnet",
   "provisioners": [
-    {
+    /*{
       "type": "file",
       "source": "preseeds/virtualbox-interfaces",
       "destination": "/tmp/virtualbox-interfaces"
@@ -24,11 +24,11 @@
       "type": "file",
       "source": "preseeds/fix-vagrant",
       "destination": "/tmp/fix-vagrant"
-    },
+    },*/
     {
       "type": "shell",
       "override": {
-        "qemu": import "provisioners/qemu.jsonnet",
+        "qemu": import "provisioners/libvirt.jsonnet",
 /*
         "null": import "provisioners/null.jsonnet",
         "virtualbox-iso": import "provisioners/virtualbox-iso.jsonnet",

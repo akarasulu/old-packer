@@ -1,5 +1,5 @@
 {
-    "vm_name": "subutai-stretch",
+    "vm_name": "stretch-nobridge",
 
     "iso_checksum": "5c583fd40360fd039b3ac98387b77dbb",
     "iso_checksum_type": "md5",

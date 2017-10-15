@@ -6,8 +6,8 @@
 
   // leave these without the -iso otherwise they will not take
   "override": {
-    "qemu": {
-      "output": "{{user `vm_name`}}-{{user `version`}}-qemu.box",
+    "libvirt": {
+      "output": "{{user `vm_name`}}-{{user `version`}}-libvirt.box",
       "vagrantfile_template": "Vagrantfile-libvirt"
     },
     /*

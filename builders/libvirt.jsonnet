@@ -1,6 +1,6 @@
 {
   "type": "qemu",
-  "output_directory": "output-{{ user `vm_name` }}-qemu",
+  "output_directory": "output-{{ user `vm_name` }}-libvirt",
   "vm_name": "{{ user `vm_name` }}",
   "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo {{user `ssh_pass`}} |sudo -S sh 'shutdown.sh'",
   "boot_command": import "common/bootcommand.jsonnet",
