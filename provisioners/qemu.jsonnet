@@ -5,9 +5,6 @@
     "scripts/authorized_keys.sh",
     "scripts/apt_proxy.sh",
     "scripts/apt.sh",
-    "scripts/vbox.sh",
-    /*"scripts/syslog.sh",*/
-    "scripts/fix-vagrant.sh",
     "scripts/rc_local.sh",
     "scripts/grub.sh",
     "scripts/cleanup.sh",

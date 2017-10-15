@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ -z "$BRANCHTAG" ]; then
-  echo 'ERROR: $BRANCHTAG parameter not specified'
-  exit -1
-fi
+#if [ -z "$BRANCHTAG" ]; then
+#  echo 'ERROR: $BRANCHTAG parameter not specified'
+#  exit -1
+#fi
 
 sudo apt-get -y autoremove
 
@@ -13,8 +13,8 @@ sudo apt-get -y autoremove
 echo "cleaning up dhcp leases"
 sudo rm /var/lib/dhcp/*
 
-echo "cleaning up pgp keys"
-rm -rf /var/snap/subutai$BRANCHTAG/current/.gnupg/
+#echo "cleaning up pgp keys"
+#rm -rf /var/snap/subutai$BRANCHTAG/current/.gnupg/
 
 # remove the proxy configuration for local apt-cacher-ng setup
 if [ -e /etc/apt/apt.conf.d/02proxy ]; then

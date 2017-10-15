@@ -8,7 +8,7 @@
   "override": {
     "qemu": {
       "output": "{{user `vm_name`}}-{{user `version`}}-qemu.box",
-      "vagrantfile_template": "Vagrantfile-virtualbox"
+      "vagrantfile_template": "Vagrantfile-libvirt"
     },
     /*
     "virtualbox": {

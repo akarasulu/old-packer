@@ -1,10 +1,10 @@
 {
   "type": "qemu",
-  "output_directory": "output-{{ user `vm_name` }}-parallels-iso",
+  "output_directory": "output-{{ user `vm_name` }}-qemu",
   "vm_name": "{{ user `vm_name` }}",
   "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo {{user `ssh_pass`}} |sudo -S sh 'shutdown.sh'",
   "boot_command": import "common/bootcommand.jsonnet",
-  "boot_wait": "10s",
+  "boot_wait": "3s",
   "http_directory": "preseeds",
   "iso_checksum": "{{ user `iso_checksum` }}",
   "iso_checksum_type": "{{ user `iso_checksum_type` }}",
@@ -24,8 +24,8 @@
   "headless": false,
   "accelerator": "kvm",
   "qemuargs": [
-    [ "-m", "4096M" ],
-    [ "-smp", "cpus=2,maxcpus=16,cores=4" ]
+    [ "-m", "{{user `memory`}}" ],
+    [ "-smp", "cpus={{user `cpus`}},maxcpus=16,cores=4" ]
   ],
   "net_device": "virtio-net",
   "disk_interface": "virtio",
