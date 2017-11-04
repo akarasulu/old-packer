@@ -20,22 +20,23 @@ for bt in virtualbox-iso parallels-iso vmware-iso; do
 done
 
 # Check to see if we have a proxy running
+## TODO: Should extract password from the variables.jsonnet
+PASSWORD="ubuntai"
+
 if [ -n "$APT_PROXY_URL" ]; then
   echo Checking defined proxy URL = $APT_PROXY_URL
   PROXY_ON=$(wget -t 1 --timeout=2 -qO- $APT_PROXY_URL/acng-report.html | grep "Transfer statistics");
   if [ -n "$PROXY_ON" ]; then
-    echo Proxy is on
+    echo 'Proxy is on'
     export PROXY_ON="true"
-    ## TODO: Extract password from the variables.jsonnet
-    PROXY_ON="true"
-    PASSWORD="ubuntai"
-    source ./preseeds/stretch-template.cfg
   else
-    echo WARNING: Proxy is off
-    PASSWORD="ubuntai"
-    source ./preseeds/stretch-template.cfg
+    echo 'WARNING: Proxy is off'
   fi
+else 
+  echo 'WARNING: No proxy defined (APT_PROXY_URL)'
 fi
+
+source ./preseeds/stretch-template.cfg
 
 echo "==> Generating template.json ..."
 jsonnet template.jsonnet > template.json
