@@ -34,7 +34,7 @@
         ],
         [
           "modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}"
-        ],
+        ]
         /*[
           "modifyvm", "{{.Name}}",
           "--nic1", "bridged",
@@ -52,6 +52,7 @@
           "--hostonlyadapter3", "vboxnet0",
           "--intnet3", "vboxnet0"
         ],*/
+        /*
         [
           "modifyvm", "{{.Name}}",
           "--uart1", "0x3F8", "4"
@@ -60,5 +61,6 @@
           "modifyvm", "{{.Name}}",
           "--uartmode1", "file", "{{template_dir}}/{{user `vm_name`}}-console.log"
         ],
+        */
       ],
     }
